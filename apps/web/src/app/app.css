@@ -61,8 +61,7 @@ header {
   border-radius: 50%;
   border: 8px solid var(--white);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-  background: #eee url('https://via.placeholder.com/500x500?text=Photo+Mayra+%26+Luca') no-repeat
-    center/cover;
+  background: url('../assets/image.png') no-repeat center/cover;
   z-index: 10;
 }
 

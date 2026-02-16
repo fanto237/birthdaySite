@@ -1,13 +1,12 @@
-FROM oven/bun:1.3.9 AS build
+FROM node:22-alpine AS build
 WORKDIR /app
 
-COPY package.json bun.lock nx.json tsconfig.base.json tsconfig.json ./
-COPY apps/web/package.json apps/web/bun.lock apps/web/angular.json apps/web/tsconfig.json apps/web/tsconfig.app.json apps/web/tsconfig.spec.json ./apps/web/
+COPY apps/web/package.json apps/web/angular.json apps/web/tsconfig.json apps/web/tsconfig.app.json apps/web/tsconfig.spec.json ./apps/web/
 COPY apps/web/src ./apps/web/src
 COPY apps/web/public ./apps/web/public
 
-RUN bun install --frozen-lockfile
-RUN bun --cwd apps/web ng build --configuration production
+RUN npm --prefix apps/web install --no-audit --no-fund
+RUN npx --prefix apps/web ng build --configuration production
 
 FROM node:22-alpine AS runtime
 WORKDIR /app
