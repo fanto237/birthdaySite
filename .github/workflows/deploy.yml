@@ -79,8 +79,9 @@ jobs:
             tar -xzf deploy.tar.gz
             rm deploy.tar.gz
 
-            # Build and start containers
-            docker compose build --no-cache
+            # Build and start containers (sequential to reduce memory pressure)
+            docker compose build api
+            docker compose build web
             docker compose up -d
 
             # Verify deployment
