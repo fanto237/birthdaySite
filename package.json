@@ -2,7 +2,11 @@
   "name": "@birthday-site/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "web:start": "nx run web:serve",
+    "web:build": "nx run web:build",
+    "web:test": "nx run web:test"
+  },
   "private": true,
   "dependencies": {},
   "devDependencies": {
@@ -16,6 +20,7 @@
     "typescript": "~5.9.2"
   },
   "workspaces": [
+    "apps/*",
     "packages/*"
   ]
 }

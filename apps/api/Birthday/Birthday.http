@@ -1,0 +1,17 @@
+@Birthday_HostAddress = http://localhost:5252
+
+GET {{Birthday_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+POST {{Birthday_HostAddress}}/api/invitations HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Lucien",
+  "adultsNumber": 2,
+  "childrensNumber": 3,
+  "note": "This is supose to be a big note"
+}

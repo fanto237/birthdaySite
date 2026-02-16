@@ -1,0 +1,297 @@
+:host {
+  display: block;
+  --princess-pink: #f8bbd0;
+  --princess-gold: #d4af37;
+  --spidey-red: #e62429;
+  --spidey-blue: #003366;
+  --text-dark: #2d3436;
+  --bg-light: #fdfbfb;
+  --white: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.main-wrapper {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text-dark);
+  background-color: var(--bg-light);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* --- FOND ANIMÉ --- */
+.main-wrapper {
+  background: linear-gradient(-45deg, #fff0f5, #ffffff, #eef5ff, #ffffff);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* --- HERO SECTION --- */
+header {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 100px 20px 40px;
+}
+
+.photo-frame {
+  width: 220px;
+  height: 220px;
+  margin-bottom: 25px;
+  border-radius: 50%;
+  border: 8px solid var(--white);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  background: #eee url('https://via.placeholder.com/500x500?text=Photo+Mayra+%26+Luca') no-repeat
+    center/cover;
+  z-index: 10;
+}
+
+.hero-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 30px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  max-width: 850px;
+  z-index: 2;
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  background: linear-gradient(to right, var(--princess-gold), var(--spidey-red));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #555;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+/* --- SECTION ANNONCE ENFANTS --- */
+.kids-announcement {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 30px 0;
+}
+.kid-card {
+  padding: 20px;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+}
+.kid-card.mayra {
+  border-bottom: 5px solid var(--princess-pink);
+}
+.kid-card.luca {
+  border-bottom: 5px solid var(--spidey-blue);
+}
+.kid-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  margin-bottom: 5px;
+}
+.kid-card .age {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--spidey-red);
+}
+
+/* --- COMPTE À REBOURS --- */
+.countdown {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+.count-item {
+  background: var(--white);
+  padding: 10px;
+  border-radius: 12px;
+  min-width: 65px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
+}
+.num {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--spidey-blue);
+  display: block;
+}
+.lab {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  color: #999;
+}
+
+/* --- SECTIONS --- */
+section {
+  padding: 60px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+h2 {
+  font-family: 'Playfair Display', serif;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+.card {
+  background: var(--white);
+  padding: 35px;
+  border-radius: 25px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
+}
+
+/* --- PROGRAMME --- */
+.timeline {
+  position: relative;
+  padding-left: 35px;
+  border-left: 3px solid #f1f1f1;
+  margin-left: 10px;
+}
+.event {
+  position: relative;
+  margin-bottom: 30px;
+}
+.event::before {
+  content: '';
+  position: absolute;
+  left: -48px;
+  top: 5px;
+  width: 22px;
+  height: 22px;
+  background: var(--white);
+  border: 4px solid var(--princess-gold);
+  border-radius: 50%;
+}
+.event.spidey::before {
+  border-color: var(--spidey-red);
+}
+.time {
+  font-weight: 700;
+  color: var(--spidey-blue);
+  font-size: 1.1rem;
+}
+
+.djoka-box {
+  background: #fff8e1;
+  border-left: 6px solid #ffc107;
+  padding: 20px;
+  border-radius: 0 15px 15px 0;
+  margin-top: 25px;
+  font-style: italic;
+}
+
+/* --- BOUTON & FORM --- */
+.btn {
+  display: inline-block;
+  padding: 18px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  text-align: center;
+  transition: 0.3s;
+}
+.btn-primary {
+  background: var(--text-dark);
+  color: var(--white);
+  width: 100%;
+  font-size: 1.1rem;
+}
+.btn-primary:hover {
+  transform: translateY(-3px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+input,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  font-family: inherit;
+}
+
+.feedback-message {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.feedback-message.error {
+  background: #ffebee;
+  color: #c62828;
+}
+
+#confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-card {
+    padding: 28px 20px;
+  }
+
+  .kids-announcement {
+    grid-template-columns: 1fr;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  header {
+    padding-top: 80px;
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "name": "invitationDb",
+      "database": "apps/api/Birthday/invitation.db"
+    }
+  ]
+  // "sqltools.connections": [
+  //   {
+  //     "previewLimit": 50,
+  //     "driver": "SQLite",
+  //     "name": "invitation",
+  //     "database": "./apps/api/Bithdayinvitation.db"
+  //   }
+  // ]
+  // "sqltools.useNodeRuntime": true
+}
