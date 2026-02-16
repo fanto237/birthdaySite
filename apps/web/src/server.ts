@@ -11,18 +11,36 @@ const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
+const apiProxyTarget = process.env['API_PROXY_TARGET'] ?? 'http://localhost:5252';
 
 /**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/{*splat}', (req, res) => {
- *   // Handle API request
- * });
- * ```
+ * Proxy API calls to the backend service.
  */
+app.use('/api', express.json(), async (req, res, next) => {
+  try {
+    const targetUrl = new URL(req.originalUrl, apiProxyTarget);
+
+    const upstreamResponse = await fetch(targetUrl, {
+      method: req.method,
+      headers: {
+        'content-type': req.headers['content-type'] ?? 'application/json',
+        accept: req.headers['accept'] ?? 'application/json',
+      },
+      body:
+        req.method === 'GET' || req.method === 'HEAD' ? undefined : JSON.stringify(req.body ?? {}),
+    });
+
+    const responseBody = await upstreamResponse.text();
+    res.status(upstreamResponse.status);
+    res.setHeader(
+      'content-type',
+      upstreamResponse.headers.get('content-type') ?? 'application/json',
+    );
+    res.send(responseBody);
+  } catch (error) {
+    next(error);
+  }
+});
 
 /**
  * Serve static files from /browser
@@ -41,9 +59,7 @@ app.use(
 app.use((req, res, next) => {
   angularApp
     .handle(req)
-    .then((response) =>
-      response ? writeResponseToNodeResponse(response, res) : next(),
-    )
+    .then((response) => (response ? writeResponseToNodeResponse(response, res) : next()))
     .catch(next);
 });
 

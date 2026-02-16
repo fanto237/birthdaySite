@@ -18,7 +18,7 @@ export interface ApiResponse {
   providedIn: 'root',
 })
 export class InvitationService {
-  private readonly apiUrl = 'http://localhost:5252/api/invitations';
+  private readonly apiUrl = '/api/invitations';
 
   constructor(private http: HttpClient) {}
 
