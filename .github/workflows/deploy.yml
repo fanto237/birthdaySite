@@ -47,7 +47,8 @@ jobs:
 
       - name: Create deployment package
         run: |
-          tar --exclude='deploy.tar.gz' \
+          tar --warning=no-file-changed
+              --exclude='deploy.tar.gz' \
               --exclude='.git' \
               --exclude='node_modules' \
               --exclude='.nx' \
