@@ -46,16 +46,7 @@ jobs:
         run: bunx nx run api:build
 
       - name: Create deployment package
-        run: |
-          tar --warning=no-file-changed \
-              --exclude='deploy.tar.gz' \
-              --exclude='.git' \
-              --exclude='node_modules' \
-              --exclude='.nx' \
-              --exclude='dist' \
-              --exclude='bin' \
-              --exclude='obj' \
-              -czf deploy.tar.gz .
+        run: git archive --format=tar.gz --output=deploy.tar.gz HEAD
 
       - name: Copy files to server
         uses: appleboy/scp-action@v0.1.7
