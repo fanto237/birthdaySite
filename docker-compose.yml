@@ -28,7 +28,7 @@ services:
     depends_on:
       - api
     ports:
-      - "80:4000"
+      - "8081:4000"
     networks:
       - birthday_net
 
