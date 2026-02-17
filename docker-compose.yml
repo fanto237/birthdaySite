@@ -9,7 +9,7 @@ services:
       ASPNETCORE_ENVIRONMENT: Production
       ConnectionStrings__Default: Data Source=/app/data/invitation.db;
     volumes:
-      - birthday_api_data:/app/data
+      - /home/fanto/deployments/birthdaySite/apps/api/Birthday:/app/data
     ports:
       - "5252:8080"
     networks:
@@ -31,9 +31,6 @@ services:
       - "80:4000"
     networks:
       - birthday_net
-
-volumes:
-  birthday_api_data:
 
 networks:
   birthday_net:
