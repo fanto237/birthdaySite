@@ -3,25 +3,44 @@
 <div class="main-wrapper">
   <!-- HERO -->
   <header>
+    <div class="language-switcher" aria-label="Language switcher">
+      <button
+        type="button"
+        class="lang-btn"
+        [class.active]="currentLanguage() === 'fr'"
+        (click)="setLanguage('fr')"
+      >
+        🇫🇷 FR
+      </button>
+      <button
+        type="button"
+        class="lang-btn"
+        [class.active]="currentLanguage() === 'de'"
+        (click)="setLanguage('de')"
+      >
+        🇩🇪 DE
+      </button>
+    </div>
+
     <div class="photo-frame"></div>
 
     <div class="hero-card">
-      <h1>Princesse & Super-Héros 👑🕷️</h1>
+      <h1>{{ t('pageTitle') }}</h1>
       <p class="subtitle">
-        "À quoi sert un château de princesse s’il n’a pas de super-héros pour le protéger... ?" 🏰🛡️
+        {{ t('subtitle') }}
       </p>
 
       <!-- SECTION ANNONCE PRÉCISE -->
       <div class="kids-announcement">
         <div class="kid-card mayra">
           <h3>Mayra Paulina 🎀</h3>
-          <p class="age">Fête son 1er an !</p>
-          <p style="font-size: 0.8rem; color: #888">La royauté à l'état pur</p>
+          <p class="age">{{ t('mayraAge') }}</p>
+          <p style="font-size: 0.8rem; color: #888">{{ t('mayraRole') }}</p>
         </div>
         <div class="kid-card luca">
           <h3>Luca Augustin 🕸️</h3>
-          <p class="age">Fête ses 4 ans !</p>
-          <p style="font-size: 0.8rem; color: #888">Le protecteur de la ville</p>
+          <p class="age">{{ t('lucaAge') }}</p>
+          <p style="font-size: 0.8rem; color: #888">{{ t('lucaRole') }}</p>
         </div>
       </div>
 
@@ -29,38 +48,38 @@
         class="event-date"
         style="font-weight: bold; color: var(--spidey-blue); margin-bottom: 20px"
       >
-        📅 Samedi 18 Avril 2026 à 15h00
+        {{ t('eventDate') }}
       </p>
 
       <div class="countdown" id="timer">
         <div class="count-item">
           <span class="num">{{ currentDay() }}</span
-          ><span class="lab">Jours</span>
+          ><span class="lab">{{ t('countdownDays') }}</span>
         </div>
         <div class="count-item">
           <span class="num">{{ currentHour() }}</span
-          ><span class="lab">Hrs</span>
+          ><span class="lab">{{ t('countdownHours') }}</span>
         </div>
         <div class="count-item">
           <span class="num">{{ currentMinute() }}</span
-          ><span class="lab">Min</span>
+          ><span class="lab">{{ t('countdownMinutes') }}</span>
         </div>
         <div class="count-item">
           <span class="num">{{ currentSecond() }}</span
-          ><span class="lab">Sec</span>
+          ><span class="lab">{{ t('countdownSeconds') }}</span>
         </div>
       </div>
 
-      <a href="#rsvp" class="btn btn-primary" style="width: auto">Réserver ma place (RSVP) 💌</a>
+      <a href="#rsvp" class="btn btn-primary" style="width: auto">{{ t('rsvpCta') }}</a>
     </div>
   </header>
 
   <!-- INFOS -->
   <section>
-    <h2>Infos Pratiques 📍</h2>
+    <h2>{{ t('practicalInfoTitle') }}</h2>
     <div class="card" style="text-align: center">
       <p>
-        <strong>Lieu de la fête :</strong><br />Vereinsheim BAC Grünhöfe<br />Marschbrookweg 147,
+        <strong>{{ t('partyLocationLabel') }}</strong><br />Vereinsheim BAC Grünhöfe<br />Marschbrookweg 147,
         27574 Bremerhaven, Allemagne
       </p>
       <br />
@@ -69,14 +88,15 @@
         target="_blank"
         class="btn btn-primary"
         style="background: #4285f4; font-size: 0.9rem; width: auto"
-        >🗺️ Ouvrir Google Maps</a
+        >{{ t('openMaps') }}</a
       >
 
       <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px">
-        <p>🎭 <strong>Dress Code Fun :</strong></p>
         <p>
-          Couronnes, capes ou vos plus beaux habits de fête ! Princesses et Héros sont attendus pour
-          la photo officielle. 📸
+          <strong>{{ t('dressCodeTitle') }}</strong>
+        </p>
+        <p>
+          {{ t('dressCodeText') }}
         </p>
       </div>
     </div>
@@ -84,78 +104,74 @@
 
   <!-- PROGRAMME -->
   <section>
-    <h2>Programme de la Mission 🚀</h2>
+    <h2>{{ t('missionProgramTitle') }}</h2>
     <div class="card">
       <div class="timeline">
         <div class="event">
           <span class="time">15h00</span>
           <p>
-            <strong>Ouverture des Portes 🤝</strong><br />Accueil des invités au château et au QG.
+            <strong>{{ t('timelineOpenTitle') }}</strong><br />{{ t('timelineOpenText') }}
           </p>
         </div>
         <div class="event spidey">
           <span class="time">15h30 - 19h00</span>
           <p>
-            <strong>Spécial Enfants 🎈</strong><br />Jeux, rires et aventures. Note : le programme
-            enfants s'achève à 19h00.
+            <strong>{{ t('timelineKidsTitle') }}</strong><br />{{ t('timelineKidsText') }}
           </p>
         </div>
         <div class="event">
           <span class="time">19h00</span>
           <p>
-            <strong>Buffet Royal 🍲</strong><br />Rechargement des batteries pour tout le monde !
+            <strong>{{ t('timelineBuffetTitle') }}</strong><br />{{ t('timelineBuffetText') }}
           </p>
         </div>
         <div class="event spidey">
           <span class="time">20h00</span>
-          <p><strong>Ouverture du Bal 💃</strong><br />C'est ici que tout commence...</p>
+          <p><strong>{{ t('timelineDanceTitle') }}</strong><br />{{ t('timelineDanceText') }}</p>
         </div>
         <div class="event">
           <span class="time">Minuit</span>
           <p>
-            <strong>Fin de la Mission 🌙</strong><br />Retour aux quartiers pour un repos bien
-            mérité.
+            <strong>{{ t('timelineEndTitle') }}</strong><br />{{ t('timelineEndText') }}
           </p>
         </div>
       </div>
 
       <div class="djoka-box">
-        <strong>🔥 L'Heure du Djoka !</strong><br />
-        À partir de 19h00, on passe aux choses sérieuses. Pour nos amis qui découvrent, le
-        <strong>Djoka</strong> c'est l'ambiance camerounaise où l'on "jette les bagages" ! On danse,
-        on célèbre et on profite à fond ! 🇨🇲✨
+        <strong>{{ t('djokaTitle') }}</strong><br />
+        {{ t('djokaText') }}
       </div>
     </div>
   </section>
 
   <!-- RSVP -->
   <section id="rsvp">
-    <h2>Serez-vous des nôtres ? ✅</h2>
+    <h2>{{ t('rsvpTitle') }}</h2>
     <div class="card">
       <form [formGroup]="rsvpForm" (ngSubmit)="onSubmitRSVP()">
         <div class="form-group">
-          <label>Votre Nom / Famille ✍️</label>
-          <input type="text" formControlName="nom" placeholder="Ex: Famille Fokou" />
+          <label>{{ t('nameLabel') }}</label>
+          <input type="text" formControlName="nom" [placeholder]="t('namePlaceholder')" />
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label>Nombre d'adultes 👨‍👩‍👧‍👦</label>
+            <label>{{ t('adultsLabel') }}</label>
             <input type="number" formControlName="adultes" min="1" />
           </div>
           <div class="form-group">
-            <label>Nombre d'enfants 🧒</label>
+            <label>{{ t('childrenLabel') }}</label>
             <input type="number" formControlName="enfants" min="0" />
           </div>
         </div>
 
         <div class="form-group">
-          <label>Un petit mot pour Mayra & Luca ? 💬</label>
+          <label>{{ t('noteLabel') }}</label>
           <textarea formControlName="message" rows="3"></textarea>
         </div>
 
         <button type="submit" class="btn btn-primary" [disabled]="isSubmitting()">
-          {{ isSubmitting() ? 'Envoi en cours...' : 'Confirmer ma présence ✅' }}
+          {{ isSubmitting() ? t('submitLoading') : t('submitIdle') }}
         </button>
       </form>
 
@@ -170,6 +186,6 @@
   </section>
 
   <footer style="text-align: center; padding: 40px; color: #bbb; font-size: 0.8rem">
-    Mayra Paulina (1 an) & Luca Augustin (4 ans) • 2026
+    {{ t('footer') }}
   </footer>
 </div>
