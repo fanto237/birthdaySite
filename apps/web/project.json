@@ -14,13 +14,13 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "bun --cwd apps/web ng build"
+        "command": "npm run ng --prefix apps/web build"
       }
     },
     "test": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "bun --cwd apps/web ng test"
+        "command": "npm run ng --prefix apps/web test"
       }
     }
   },
