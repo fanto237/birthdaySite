@@ -26,24 +26,19 @@ jobs:
         with:
           node-version: 22
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: 1.3.9
-
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "10.0.x"
 
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        run: npm ci
 
       - name: Nx build web
-        run: bunx nx run web:build
+        run: npx nx run web:build
 
       - name: Nx build api
-        run: bunx nx run api:build
+        run: npx nx run api:build
 
       - name: Create deployment package
         run: git archive --format=tar.gz --output=deploy.tar.gz HEAD
