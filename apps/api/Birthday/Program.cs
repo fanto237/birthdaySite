@@ -5,6 +5,8 @@ using Birthday.Repository;
 using Birthday.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Azure.Identity;
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("Default");
@@ -35,6 +37,12 @@ builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddScoped<IInvitationRepository, InvitationRepository>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
+if (builder.Environment.IsProduction())
+{
+    var vaultUri = new Uri(builder.Configuration["KeyVault:VaultUri"]!);
+
+    builder.Configuration.AddAzureKeyVault(vaultUri, new DefaultAzureCredential());
+}
 
 var app = builder.Build();
 
@@ -43,6 +51,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+
 app.UseSerilogRequestLogging();
 app.UseCors("AllowFrontend");
 

@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text;
 using Birthday.DTOs;
 using Birthday.Models;
 using MailKit.Net.Smtp;
@@ -13,7 +14,7 @@ public sealed class EmailService(IOptions<EmailOptions> emailOptions, Serilog.IL
     private readonly EmailOptions _emailOptions = emailOptions.Value;
     private readonly Serilog.ILogger _logger = logger;
 
-    public async Task<DateTime> SendEmailAsync(string name, int adultsNumber, int childrensNumber, string note, string subject, CancellationToken cancellationToken = default)
+    public async Task<DateTime> SendEmailAsync(string name, int adultsNumber, int childrensNumber, string note, string subject, IReadOnlyCollection<Person> confirmedPersons, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -26,7 +27,16 @@ public sealed class EmailService(IOptions<EmailOptions> emailOptions, Serilog.IL
             email.To.Add(MailboxAddress.Parse(_emailOptions.To));
 
             email.Subject = subject;
-            email.Body = new TextPart("html") { Text = CreateEmailHtmlBody(name, adultsNumber, childrensNumber, note) };
+
+            var bodyBuilder = new BodyBuilder
+            {
+                HtmlBody = CreateEmailHtmlBody(name, adultsNumber, childrensNumber, note)
+            };
+
+            var csvBytes = Encoding.UTF8.GetBytes(CreateConfirmedPersonsCsv(confirmedPersons));
+            bodyBuilder.Attachments.Add("confirmed-participants.csv", csvBytes, ContentType.Parse("text/csv"));
+
+            email.Body = bodyBuilder.ToMessageBody();
 
             using var client = new SmtpClient();
 
@@ -49,6 +59,35 @@ public sealed class EmailService(IOptions<EmailOptions> emailOptions, Serilog.IL
             _logger.Error(ex, "An error occurred while sending email for person: {PersonName}", name);
             throw;
         }
+    }
+
+    private static string CreateConfirmedPersonsCsv(IReadOnlyCollection<Person> confirmedPersons)
+    {
+        var rows = new StringBuilder();
+        rows.AppendLine("Nom,Nombre Adultes,Nombre Enfants,Note,Id Invitation");
+
+        foreach (var person in confirmedPersons)
+        {
+            rows.AppendLine(string.Join(",",
+                EscapeCsv(person.Name),
+                person.AdultsNumber.ToString(),
+                person.ChildrensNumber.ToString(),
+                EscapeCsv(person.Note),
+                person.InvitationId));
+        }
+
+        return rows.ToString();
+    }
+
+    private static string EscapeCsv(string? value)
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            return "\"\"";
+        }
+
+        var escaped = value.Replace("\"", "\"\"");
+        return $"\"{escaped}\"";
     }
 
 

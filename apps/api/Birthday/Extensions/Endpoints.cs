@@ -35,12 +35,20 @@ public static class WebApplicationExtensions
     var invitationId = Guid.NewGuid();
     var createAt = DateTime.UtcNow;
 
-    var sentAt = await emailService.SendEmailAsync(request.Name, request.AdultsNumber, request.ChildrensNumber, request.Note, $"Bithday Confirmation for {request.Name}");
-
     var person = new Person(personId, request.Name, request.AdultsNumber, request.ChildrensNumber, request.Note, invitationId);
-    var invitation = new Invitation(invitationId, createAt, sentAt, personId);
-
     await personRepository.AddPerson(person);
+
+    var confirmedPersons = await personRepository.GetAllConfirmedPersons();
+
+    var sentAt = await emailService.SendEmailAsync(
+      request.Name,
+      request.AdultsNumber,
+      request.ChildrensNumber,
+      request.Note,
+      $"Bithday Confirmation for {request.Name}",
+      confirmedPersons);
+
+    var invitation = new Invitation(invitationId, createAt, sentAt, personId);
     await invitationRepository.CreateInvitation(invitation);
 
     logger.Information("Invitation with Id {InvitationId} has been created for person {PersonName}", invitationId, person.Name);

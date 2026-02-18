@@ -6,4 +6,5 @@ namespace Birthday.Repository;
 public interface IPersonRepository
 {
   Task AddPerson(Person person);
+  Task<List<Person>> GetAllConfirmedPersons();
 }
