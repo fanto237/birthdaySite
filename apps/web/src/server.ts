@@ -19,6 +19,7 @@ const apiProxyTarget = process.env['API_PROXY_TARGET'] ?? 'http://localhost:5252
 app.use('/api', express.json(), async (req, res, next) => {
   try {
     const targetUrl = new URL(req.originalUrl, apiProxyTarget);
+    console.log(`Proxying request to ${targetUrl.href}`);
 
     const upstreamResponse = await fetch(targetUrl, {
       method: req.method,

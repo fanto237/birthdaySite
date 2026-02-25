@@ -24,8 +24,7 @@ public sealed class EmailService(IOptions<EmailOptions> emailOptions, Serilog.IL
             var email = new MimeMessage();
 
             email.From.Add(new MailboxAddress(_emailOptions.SenderName, _emailOptions.From));
-            email.To.Add(MailboxAddress.Parse(_emailOptions.To));
-            email.To.Add(MailboxAddress.Parse("luciensiani@gmail.com"));
+            email.To.AddRange(InternetAddressList.Parse(_emailOptions.To));
 
             email.Subject = subject;
 

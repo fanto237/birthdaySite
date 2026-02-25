@@ -27,7 +27,7 @@ const TRANSLATIONS = {
     subtitle:
       '"À quoi sert un château de princesse s’il n’a pas de super-héros pour le protéger... ?" 🏰🛡️',
     mayraAge: 'Fête son 1er an !',
-    mayraRole: 'La royauté à l\'état pur',
+    mayraRole: "La royauté à l'état pur",
     lucaAge: 'Fête ses 4 ans !',
     lucaRole: 'Le protecteur de la ville',
     eventDate: '📅 Samedi 18 Avril 2026 à 15h00',
@@ -46,21 +46,21 @@ const TRANSLATIONS = {
     timelineOpenTitle: 'Ouverture des Portes 🤝',
     timelineOpenText: 'Accueil des invités au château et au QG.',
     timelineKidsTitle: 'Spécial Enfants 🎈',
-    timelineKidsText: 'Jeux, rires et aventures. Note : le programme enfants s\'achève à 19h00.',
+    timelineKidsText: "Jeux, rires et aventures. Note : le programme enfants s'achève à 19h00.",
     timelineBuffetTitle: 'Buffet Royal 🍲',
     timelineBuffetText: 'Rechargement des batteries pour tout le monde !',
     timelineDanceTitle: 'Ouverture du Bal 💃',
-    timelineDanceText: 'C\'est ici que tout commence...',
+    timelineDanceText: "C'est ici que tout commence...",
     timelineEndTitle: 'Fin de la Mission 🌙',
     timelineEndText: 'Retour aux quartiers pour un repos bien mérité.',
-    djokaTitle: '🔥 L\'Heure du Djoka !',
+    djokaTitle: "🔥 L'Heure du Djoka !",
     djokaText:
-      'À partir de 19h00, on passe aux choses sérieuses. Pour nos amis qui découvrent, le Djoka c\'est l\'ambiance camerounaise où l\'on "jette les bagages" ! On danse, on célèbre et on profite à fond ! 🇨🇲✨',
+      "À partir de 19h00, on passe aux choses sérieuses. Pour nos amis qui découvrent, le Djoka c'est l'ambiance camerounaise où l'on \"jette les bagages\" ! On danse, on célèbre et on profite à fond ! 🇨🇲✨",
     rsvpTitle: 'Serez-vous des nôtres ? ✅',
     nameLabel: 'Votre Nom / Famille ✍️',
     namePlaceholder: 'Ex: Famille Fokou',
-    adultsLabel: 'Nombre d\'adultes 👨‍👩‍👧‍👦',
-    childrenLabel: 'Nombre d\'enfants 🧒',
+    adultsLabel: "Nombre d'adultes 👨‍👩‍👧‍👦",
+    childrenLabel: "Nombre d'enfants 🧒",
     noteLabel: 'Un petit mot pour Mayra & Luca ? 💬',
     submitIdle: 'Confirmer ma présence ✅',
     submitLoading: 'Envoi en cours...',
@@ -71,7 +71,8 @@ const TRANSLATIONS = {
   },
   de: {
     pageTitle: 'Prinzessin & Superhelden 👑🕷️',
-    subtitle: '"Wozu dient ein Prinzessinnenschloss, wenn es keine Superhelden gibt, die es beschützen...?" 🏰🛡️',
+    subtitle:
+      '"Wozu dient ein Prinzessinnenschloss, wenn es keine Superhelden gibt, die es beschützen...?" 🏰🛡️',
     mayraAge: 'Feiert ihren 1. Geburtstag!',
     mayraRole: 'Königlichkeit in reinster Form',
     lucaAge: 'Feiert seinen 4. Geburtstag!',
@@ -92,7 +93,8 @@ const TRANSLATIONS = {
     timelineOpenTitle: 'Türöffnung 🤝',
     timelineOpenText: 'Empfang der Gäste im Schloss und im Hauptquartier.',
     timelineKidsTitle: 'Kinder-Spezial 🎈',
-    timelineKidsText: 'Spiele, Lachen und Abenteuer. Hinweis: Das Kinderprogramm endet um 19:00 Uhr.',
+    timelineKidsText:
+      'Spiele, Lachen und Abenteuer. Hinweis: Das Kinderprogramm endet um 19:00 Uhr.',
     timelineBuffetTitle: 'Königliches Buffet 🍲',
     timelineBuffetText: 'Energie auftanken für alle!',
     timelineDanceTitle: 'Eröffnung des Balls 💃',
@@ -297,6 +299,9 @@ export class App implements AfterViewInit {
         console.error('RSVP submission error:', err);
         const errorMsg = err?.error?.result || this.t('genericError');
         this.errorMessage.set(errorMsg);
+        this.isSubmitting.set(false);
+      },
+      complete: () => {
         this.isSubmitting.set(false);
       },
     });

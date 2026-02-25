@@ -9,6 +9,13 @@
       "type": "dotnet",
       "request": "launch",
       "projectPath": "${workspaceFolder}/apps/api/Birthday/Birthday.csproj"
+    },
+    {
+      "name": "angular",
+      "type": "chrome",
+      "request": "launch",
+      // "preLaunchTask": "npm: start",
+      "url": "http://localhost:4200/"
     }
   ]
 }

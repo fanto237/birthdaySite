@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 
 export interface CreateInvitationRequest {
   name: string;
@@ -22,7 +21,7 @@ export class InvitationService {
 
   constructor(private http: HttpClient) {}
 
-  createInvitation(invitation: CreateInvitationRequest): Observable<ApiResponse> {
+  createInvitation(invitation: CreateInvitationRequest) {
     return this.http.post<ApiResponse>(this.apiUrl, invitation);
   }
 }
