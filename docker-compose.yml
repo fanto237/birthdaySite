@@ -5,6 +5,8 @@ services:
       dockerfile: apps/api/Birthday/Dockerfile
     container_name: birthday-api
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
       ASPNETCORE_ENVIRONMENT: Production
       EmailSettings__Password: ${EmailSettings__Password}
