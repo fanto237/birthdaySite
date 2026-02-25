@@ -82,19 +82,13 @@ cp .env.sample .env
 
 ### Run locally
 
-1. Start the API:
+1. Start the api and the web app using Nx:
 
 ```bash
-dotnet run --project apps/api/Birthday/Birthday.csproj
+nx run-many -t serve
 ```
 
-2. Start the web app (in another terminal):
-
-```bash
-npm run web:start
-```
-
-3. Open the frontend:
+2. Open the frontend:
 
 ```text
 http://localhost:4200
