@@ -13,5 +13,5 @@ Content-Type: application/json
   "name": "Lucien",
   "adultsNumber": 2,
   "childrensNumber": 3,
-  "note": "This is supose to be a big note"
+  "note": "This is supposed to be a big note"
 }

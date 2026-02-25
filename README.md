@@ -1,90 +1,131 @@
-# BirthdaySite
+# Birthday Site
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+Full-stack birthday invitation app built as an Nx monorepo, with:
+- **Web frontend**: Angular app (`apps/web`)
+- **API backend**: ASP.NET Core minimal API (`apps/api/Birthday`)
+- **Database**: SQLite (EF Core)
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+## Table of Contents
+- [Birthday Site](#birthday-site)
+  - [Table of Contents](#table-of-contents)
+  - [Project Structure](#project-structure)
+  - [Installation](#installation)
+    - [Prerequisites](#prerequisites)
+    - [Getting Started](#getting-started)
+  - [Usage](#usage)
+    - [Run locally](#run-locally)
+    - [Run with Docker Compose](#run-with-docker-compose)
+  - [Environment Variables](#environment-variables)
+  - [Contributing](#contributing)
+  - [License](#license)
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## Project Structure
 
-## Finish your CI setup
-
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/Z8Usrz1g8u)
-
-
-## Generate a library
-
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
+```text
+project-root/
+├─ apps/
+│  ├─ api/
+│  │  └─ Birthday/
+│  │     ├─ Program.cs
+│  │     ├─ Data/
+│  │     ├─ Models/
+│  │     ├─ Repository/
+│  │     ├─ Services/
+│  │     └─ Birthday.csproj
+│  └─ web/
+│     ├─ src/
+│     ├─ angular.json
+│     └─ package.json
+├─ docker-compose.yml
+├─ package.json
+├─ nx.json
+└─ README.md
 ```
 
-## Run tasks
+- `apps/api/Birthday`: .NET API handling invitations, persistence, and email sending.
+- `apps/web`: Angular frontend for the birthday invitation flow.
+- `docker-compose.yml`: Production-like multi-container setup for API + web.
+- `package.json`: Nx workspace scripts for web tasks.
+- `README.md`: This file.
 
-To build the library use:
+## Installation
 
-```sh
-npx nx build pkg1
+### Prerequisites
+- Node.js (LTS recommended) + npm
+- .NET SDK (target framework in this repo is `net10.0`)
+- Docker + Docker Compose (optional, for containerized run)
+
+### Getting Started
+
+1. Clone the repository:
+
+```bash
+git clone <your-repo-url>
+cd birthdaySite
 ```
 
-To run any task with Nx use:
+2. Install root dependencies:
 
-```sh
-npx nx <target> <project-name>
+```bash
+npm install
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+3. Create your environment file from the sample:
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Versioning and releasing
-
-To version and release the library use
-
-```
-npx nx release
+```bash
+cp .env.sample .env
 ```
 
-Pass `--dry-run` to see what would happen without actually releasing the library.
+4. Fill required values in `.env` (especially mail settings).
 
-[Learn more about Nx release &raquo;](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Usage
 
-## Keep TypeScript project references up to date
+### Run locally
 
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
+1. Start the API:
 
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
-
-```sh
-npx nx sync
+```bash
+dotnet run --project apps/api/Birthday/Birthday.csproj
 ```
 
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
+2. Start the web app (in another terminal):
 
-```sh
-npx nx sync:check
+```bash
+npm run web:start
 ```
 
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
+3. Open the frontend:
 
+```text
+http://localhost:4200
+```
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+> API CORS is configured for `http://localhost:4200` in development.
 
-## Install Nx Console
+### Run with Docker Compose
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+```bash
+docker compose up --build
+```
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Default exposed ports:
+- Web: `http://localhost:8081`
+- API: `http://localhost:5252`
 
-## Useful links
+## Environment Variables
 
-Learn more:
+Environment variables are loaded from `.env`.
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Based on `.env.sample`:
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+```env
+EmailSettings__Password=
+EmailSettings__To=
+EmailSettings__Username=
+```
+
+These values are used by the API email service and by Docker Compose in production-like runs.
+
+## Contributing
+
+Contributions are welcome. Open an issue or submit a pull request with descriptions of changes.
