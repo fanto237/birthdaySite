@@ -24,13 +24,12 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '24'
-          cache: 'npm'
+          node-version: 22
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: "10.0.x"
 
       - name: Install dependencies
         run: npm install --no-package-lock
@@ -52,8 +51,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           port: ${{ secrets.SERVER_PORT || 22 }}
-          source: 'deploy.tar.gz'
-          target: '~/deployments/${{ env.PROJECT_NAME }}/'
+          source: "deploy.tar.gz"
+          target: "~/deployments/${{ env.PROJECT_NAME }}/"
 
       - name: Extract and deploy
         uses: appleboy/ssh-action@v1.0.3
