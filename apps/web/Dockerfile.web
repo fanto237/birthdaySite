@@ -1,0 +1,20 @@
+# FROM node:22-alpine AS build
+# WORKDIR /app
+
+# COPY apps/web/package.json apps/web/angular.json apps/web/tsconfig.json apps/web/tsconfig.app.json apps/web/tsconfig.spec.json ./apps/web/
+# COPY apps/web/src ./apps/web/src
+# COPY apps/web/public ./apps/web/public
+
+# RUN npm --prefix apps/web install --no-audit --no-fund
+# RUN npx --prefix apps/web ng build --configuration production
+
+FROM node:22-alpine
+WORKDIR /app
+
+COPY dist/web ./dist/web
+
+ENV NODE_ENV=production
+ENV PORT=4000
+EXPOSE 4000
+
+CMD ["node", "dist/web/server/server.mjs"]

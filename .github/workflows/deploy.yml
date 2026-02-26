@@ -37,11 +37,17 @@ jobs:
       - name: Nx build web
         run: npx nx run web:build
 
-      - name: Nx build api
-        run: npx nx run api:build
+      - name: Nx publish api
+        run: npx nx run api:pubish
 
       - name: Create deployment package
-        run: git archive --format=tar.gz --output=deploy.tar.gz HEAD
+        run: |
+          tar -czf deploy.tar.gz \
+            docker-compose.yml \
+            apps/api/Birthday/bin/Release/net10.0/publish/ \
+            apps/api/Birthday/Dockerfile.api \
+            apps/web/dist/ \
+            apps/web/Dockerfile.web \
 
       - name: Copy files to server
         uses: appleboy/scp-action@v0.1.7
@@ -89,6 +95,9 @@ jobs:
               docker compose logs
               exit 1
             fi
+
+            # Clean up old images and containers
+            docker system prune -f
 
             echo "Deployment completed at $(date)"
 

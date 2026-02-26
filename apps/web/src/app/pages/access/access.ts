@@ -17,7 +17,6 @@ const TRANSLATIONS = {
     revealCode: 'Afficher',
     hideCode: 'Masquer',
     invalidCode: 'Code invalide. Veuillez réessayer.',
-    networkError: 'Impossible de valider le code. Veuillez réessayer.',
   },
   de: {
     title: 'Private Einladung',
@@ -28,7 +27,6 @@ const TRANSLATIONS = {
     revealCode: 'Anzeigen',
     hideCode: 'Verbergen',
     invalidCode: 'Ungültiger Code. Bitte versuche es erneut.',
-    networkError: 'Der Code konnte nicht geprüft werden. Bitte versuche es erneut.',
   },
 } as const;
 
@@ -84,6 +82,24 @@ export class AccessComponent {
     this.revealCode.update((value) => !value);
   }
 
+  requestObserver = {
+    next: (response: ResponseType) => {
+      if (response.valid) {
+        localStorage.setItem('birthday-site-access-granted', 'true');
+        this.router.navigateByUrl('/home');
+        return;
+      }
+      this.isSubmitting.set(false);
+    },
+    error: () => {
+      this.errorMessage.set(this.t('invalidCode'));
+      this.isSubmitting.set(false);
+    },
+    complete: () => {
+      this.isSubmitting.set(false);
+    },
+  };
+
   submit(): void {
     if (this.form.invalid || this.isSubmitting()) {
       this.form.markAllAsTouched();
@@ -94,26 +110,14 @@ export class AccessComponent {
     this.isSubmitting.set(true);
     this.errorMessage.set('');
 
+    // http request
     this.http
       .post<{ valid: boolean; message?: string }>('/validate-access-code', { code })
-      .subscribe({
-        next: (response) => {
-          if (response.valid) {
-            localStorage.setItem('birthday-site-access-granted', 'true');
-            this.router.navigateByUrl('/home');
-            return;
-          }
-
-          this.errorMessage.set(response.message ?? this.t('invalidCode'));
-          this.isSubmitting.set(false);
-        },
-        error: () => {
-          this.errorMessage.set(this.t('networkError'));
-          this.isSubmitting.set(false);
-        },
-        complete: () => {
-          this.isSubmitting.set(false);
-        },
-      });
+      .subscribe(this.requestObserver);
   }
 }
+
+type ResponseType = {
+  valid: boolean;
+  message?: string | undefined;
+};
