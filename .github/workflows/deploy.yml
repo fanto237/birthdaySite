@@ -31,14 +31,14 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
-      - name: Install dependencies
+      - name: Install Npm dependencies
         run: npm install --no-package-lock
 
       - name: Nx build web
         run: npx nx run web:build
 
       - name: Nx publish api
-        run: npx nx run api:pubish
+        run: npx nx run api:publish
 
       - name: Create deployment package
         run: |
