@@ -11,8 +11,6 @@ services:
       ASPNETCORE_ENVIRONMENT: Production
       EmailSettings__Password: ${EmailSettings__Password}
       ConnectionStrings__Default: Data Source=/app/data/invitation.db;
-    # volumes:
-    #   - /home/fanto/deployments/birthdaySite/apps/api/Birthday:/app/data
     ports:
       - "5252:8080"
     networks:
