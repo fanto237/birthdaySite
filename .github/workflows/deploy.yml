@@ -21,38 +21,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Install dependencies
+        run: npm install --no-package-lock
+
+      - name: Nx build web
+        run: npx nx run web:build
+
+      - name: Nx build api
+        run: npx nx run api:build
+
       - name: Create deployment package
-        run: |
-          set -euo pipefail
-
-          rm -rf deploy
-          mkdir -p deploy
-
-          # Root deployment files
-          cp --parents docker-compose.yml deploy/
-
-          # API: copy only source needed for Docker build context (exclude build artifacts and local db)
-          rsync -a \
-            --exclude='bin/' \
-            --exclude='obj/' \
-            --exclude='Logs/' \
-            --exclude='*.db' \
-            apps/api/Birthday/ deploy/apps/api/Birthday/
-
-          # Web: copy only files required by apps/web/Dockerfile
-          cp --parents \
-            apps/web/Dockerfile \
-            apps/web/package.json \
-            apps/web/angular.json \
-            apps/web/tsconfig.json \
-            apps/web/tsconfig.app.json \
-            apps/web/tsconfig.spec.json \
-            deploy/
-
-          rsync -a apps/web/src/ deploy/apps/web/src/
-          rsync -a apps/web/public/ deploy/apps/web/public/
-
-          tar -czf deploy.tar.gz -C deploy .
+        run: git archive --format=tar.gz --output=deploy.tar.gz HEAD
 
       - name: Copy files to server
         uses: appleboy/scp-action@v0.1.7
@@ -82,17 +72,8 @@ jobs:
             docker compose down || true
 
             # Extract deployment package
-            rm -rf .deploy-release
-            mkdir -p .deploy-release
-            tar -xzf deploy.tar.gz -C .deploy-release
+            tar -xzf deploy.tar.gz
             rm deploy.tar.gz
-
-            # Sync only deployment files and keep server-specific secrets/data
-            rsync -a --delete \
-              --exclude='.env' \
-              --exclude='apps/api/Birthday/*.db' \
-              .deploy-release/ ./
-            rm -rf .deploy-release
 
             # Build and start containers (sequential to reduce memory pressure)
             docker compose build api
