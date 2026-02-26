@@ -26,7 +26,7 @@
     "publish": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "dotnet publish apps/api/Birthday/Birthday.csproj -c Release /p:UseAppHost=false"
+        "command": "dotnet publish apps/api/Birthday/Birthday.csproj -c Release -o api /p:UseAppHost=false"
       }
     }
   },

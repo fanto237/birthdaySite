@@ -42,15 +42,14 @@ jobs:
 
       - name: Create deployment package
         run: |
-          mv apps/api/Birthday/bin/Release/net10.0/publish/ .
           mv apps/api/Birthday/Dockerfile.api .
-          mv apps/web/dist/ .
+          mv apps/web/dist/web .
           mv apps/web/Dockerfile.web .
           tar -czf deploy.tar.gz \
             docker-compose.yml \
-            publish/ \
+            api/ \
+            web/ \
             Dockerfile.api \
-            dist/ \
             Dockerfile.web \
 
       - name: Copy files to server

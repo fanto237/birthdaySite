@@ -42,3 +42,4 @@ Thumbs.db
 .nx/workspace-data
 apps/api/Birthday/invitation.db
 .env
+api

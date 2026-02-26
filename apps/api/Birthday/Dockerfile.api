@@ -3,7 +3,7 @@ WORKDIR /app
 
 RUN mkdir -p /app/data
 
-COPY publish .
+COPY api .
 COPY invitation.db /app/data
 
 ENV ASPNETCORE_URLS=http://+:8080
