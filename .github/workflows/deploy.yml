@@ -42,12 +42,16 @@ jobs:
 
       - name: Create deployment package
         run: |
+          mv apps/api/Birthday/bin/Release/net10.0/publish/ .
+          mv apps/api/Birthday/Dockerfile.api .
+          mv apps/web/dist/ .
+          mv apps/web/Dockerfile.web .
           tar -czf deploy.tar.gz \
             docker-compose.yml \
-            apps/api/Birthday/bin/Release/net10.0/publish/ \
-            apps/api/Birthday/Dockerfile.api \
-            apps/web/dist/ \
-            apps/web/Dockerfile.web \
+            publish/ \
+            Dockerfile.api \
+            dist/ \
+            Dockerfile.web \
 
       - name: Copy files to server
         uses: appleboy/scp-action@v0.1.7
