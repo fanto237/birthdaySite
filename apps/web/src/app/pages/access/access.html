@@ -1,0 +1,100 @@
+<div class="access-page">
+  <div class="access-card">
+    <div class="language-switcher" aria-label="Language switcher">
+      <button
+        type="button"
+        class="lang-btn"
+        [class.active]="currentLanguage() === 'fr'"
+        (click)="setLanguage('fr')"
+      >
+        🇫🇷 FR
+      </button>
+      <button
+        type="button"
+        class="lang-btn"
+        [class.active]="currentLanguage() === 'de'"
+        (click)="setLanguage('de')"
+      >
+        🇩🇪 DE
+      </button>
+    </div>
+
+    <div class="photo-frame" aria-hidden="true"></div>
+
+    <p class="eyebrow">👑🕷️ Mayra & Luca</p>
+    <h1>{{ t('title') }}</h1>
+    <p class="subtitle">{{ t('subtitle') }}</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <label for="code">{{ t('codeLabel') }}</label>
+
+      <div class="input-wrapper">
+        <input
+          id="code"
+          [type]="revealCode() ? 'text' : 'password'"
+          formControlName="code"
+          autocomplete="off"
+        />
+
+        <button
+          class="toggle-visibility-btn"
+          type="button"
+          (click)="toggleCodeVisibility()"
+          [attr.aria-label]="revealCode() ? t('hideCode') : t('revealCode')"
+        >
+          @if (revealCode()) {
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-eye-off-icon lucide-eye-off"
+              aria-hidden="true"
+            >
+              <path
+                d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"
+              />
+              <path d="M14.084 14.158a3 3 0 0 1-4.242-4.242" />
+              <path
+                d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"
+              />
+              <path d="m2 2 20 20" />
+            </svg>
+          } @else {
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-eye-icon lucide-eye"
+              aria-hidden="true"
+            >
+              <path
+                d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"
+              />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          }
+        </button>
+      </div>
+
+      <button class="submit-btn" type="submit" [disabled]="isSubmitting()">
+        {{ isSubmitting() ? t('submitLoading') : t('submitIdle') }}
+      </button>
+    </form>
+
+    @if (errorMessage()) {
+      <p class="error">{{ errorMessage() }}</p>
+    }
+  </div>
+</div>

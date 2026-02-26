@@ -12,6 +12,22 @@ const browserDistFolder = join(import.meta.dirname, '../browser');
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 const apiProxyTarget = process.env['API_PROXY_TARGET'] ?? 'http://localhost:5252';
+const accessCode = process.env['ACCESS_CODE'] ?? '';
+
+app.post('/validate-access-code', express.json(), (req, res) => {
+  const providedCode = typeof req.body?.code === 'string' ? req.body.code : '';
+  const valid = accessCode.length > 0 && providedCode === accessCode;
+
+  if (!valid) {
+    res.status(401).json({
+      valid: false,
+      message: 'Invalid code. Please try again.',
+    });
+    return;
+  }
+
+  res.status(200).json({ valid: true });
+});
 
 /**
  * Proxy API calls to the backend service.

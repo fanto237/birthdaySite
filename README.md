@@ -1,11 +1,13 @@
 # Birthday Site
 
 Full-stack birthday invitation app built as an Nx monorepo, with:
+
 - **Web frontend**: Angular app (`apps/web`)
 - **API backend**: ASP.NET Core minimal API (`apps/api/Birthday`)
 - **Database**: SQLite (EF Core)
 
 ## Table of Contents
+
 - [Birthday Site](#birthday-site)
   - [Table of Contents](#table-of-contents)
   - [Project Structure](#project-structure)
@@ -51,6 +53,7 @@ project-root/
 ## Installation
 
 ### Prerequisites
+
 - Node.js (LTS recommended) + npm
 - .NET SDK (target framework in this repo is `net10.0`)
 - Docker + Docker Compose (optional, for containerized run)
@@ -103,6 +106,7 @@ docker compose up --build
 ```
 
 Default exposed ports:
+
 - Web: `http://localhost:8081`
 - API: `http://localhost:5252`
 
@@ -116,6 +120,7 @@ Based on `.env.sample`:
 EmailSettings__Password=
 EmailSettings__To=
 EmailSettings__Username=
+ACCESS_CODE=
 ```
 
 These values are used by the API email service and by Docker Compose in production-like runs.

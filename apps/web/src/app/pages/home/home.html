@@ -1,0 +1,195 @@
+<canvas #confettiCanvas id="confetti-canvas"></canvas>
+
+<div class="main-wrapper">
+  <header>
+    <div class="language-switcher" aria-label="Language switcher">
+      <button
+        type="button"
+        class="lang-btn"
+        [class.active]="currentLanguage() === 'fr'"
+        (click)="setLanguage('fr')"
+      >
+        🇫🇷 FR
+      </button>
+      <button
+        type="button"
+        class="lang-btn"
+        [class.active]="currentLanguage() === 'de'"
+        (click)="setLanguage('de')"
+      >
+        🇩🇪 DE
+      </button>
+    </div>
+
+    <div class="photo-frame"></div>
+
+    <div class="hero-card">
+      <h1>{{ t('pageTitle') }}</h1>
+      <p class="subtitle">
+        {{ t('subtitle') }}
+      </p>
+
+      <div class="kids-announcement">
+        <div class="kid-card mayra">
+          <h3>Mayra Paulina 🎀</h3>
+          <p class="age">{{ t('mayraAge') }}</p>
+          <p style="font-size: 0.8rem; color: #888">{{ t('mayraRole') }}</p>
+        </div>
+        <div class="kid-card luca">
+          <h3>Luca Augustin 🕸️</h3>
+          <p class="age">{{ t('lucaAge') }}</p>
+          <p style="font-size: 0.8rem; color: #888">{{ t('lucaRole') }}</p>
+        </div>
+      </div>
+
+      <p
+        class="event-date"
+        style="font-weight: bold; color: var(--spidey-blue); margin-bottom: 20px"
+      >
+        {{ t('eventDate') }}
+      </p>
+
+      <div class="countdown" id="timer">
+        <div class="count-item">
+          <span class="num">{{ currentDay() }}</span
+          ><span class="lab">{{ t('countdownDays') }}</span>
+        </div>
+        <div class="count-item">
+          <span class="num">{{ currentHour() }}</span
+          ><span class="lab">{{ t('countdownHours') }}</span>
+        </div>
+        <div class="count-item">
+          <span class="num">{{ currentMinute() }}</span
+          ><span class="lab">{{ t('countdownMinutes') }}</span>
+        </div>
+        <div class="count-item">
+          <span class="num">{{ currentSecond() }}</span
+          ><span class="lab">{{ t('countdownSeconds') }}</span>
+        </div>
+      </div>
+
+      <a href="#rsvp" class="btn btn-primary" style="width: auto">{{ t('rsvpCta') }}</a>
+    </div>
+  </header>
+
+  <section>
+    <h2>{{ t('practicalInfoTitle') }}</h2>
+    <div class="card" style="text-align: center">
+      <p>
+        <strong>{{ t('partyLocationLabel') }}</strong
+        ><br />Vereinsheim BAC Grünhöfe<br />Marschbrookweg 147, 27574 Bremerhaven, Allemagne
+      </p>
+      <br />
+      <a
+        href="https://www.google.com/maps/search/?api=1&query=Vereinsheim+BAC+Grünhöfe+Marschbrookweg+147+Bremerhaven"
+        target="_blank"
+        class="btn btn-primary"
+        style="background: #4285f4; font-size: 0.9rem; width: auto"
+        >{{ t('openMaps') }}</a
+      >
+
+      <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px">
+        <p>
+          <strong>{{ t('dressCodeTitle') }}</strong>
+        </p>
+        <p>
+          {{ t('dressCodeText') }}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>{{ t('missionProgramTitle') }}</h2>
+    <div class="card">
+      <div class="timeline">
+        <div class="event">
+          <span class="time">15h00</span>
+          <p>
+            <strong>{{ t('timelineOpenTitle') }}</strong
+            ><br />{{ t('timelineOpenText') }}
+          </p>
+        </div>
+        <div class="event spidey">
+          <span class="time">15h30 - 19h00</span>
+          <p>
+            <strong>{{ t('timelineKidsTitle') }}</strong
+            ><br />{{ t('timelineKidsText') }}
+          </p>
+        </div>
+        <div class="event">
+          <span class="time">19h00</span>
+          <p>
+            <strong>{{ t('timelineBuffetTitle') }}</strong
+            ><br />{{ t('timelineBuffetText') }}
+          </p>
+        </div>
+        <div class="event spidey">
+          <span class="time">20h00</span>
+          <p>
+            <strong>{{ t('timelineDanceTitle') }}</strong
+            ><br />{{ t('timelineDanceText') }}
+          </p>
+        </div>
+        <div class="event">
+          <span class="time">Minuit</span>
+          <p>
+            <strong>{{ t('timelineEndTitle') }}</strong
+            ><br />{{ t('timelineEndText') }}
+          </p>
+        </div>
+      </div>
+
+      <div class="djoka-box">
+        <strong>{{ t('djokaTitle') }}</strong
+        ><br />
+        {{ t('djokaText') }}
+      </div>
+    </div>
+  </section>
+
+  <section id="rsvp">
+    <h2>{{ t('rsvpTitle') }}</h2>
+    <div class="card">
+      <form [formGroup]="rsvpForm" (ngSubmit)="onSubmitRSVP()">
+        <div class="form-group">
+          <label>{{ t('nameLabel') }}</label>
+          <input type="text" formControlName="nom" [placeholder]="t('namePlaceholder')" />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>{{ t('adultsLabel') }}</label>
+            <input type="number" formControlName="adultes" min="1" />
+          </div>
+          <div class="form-group">
+            <label>{{ t('childrenLabel') }}</label>
+            <input type="number" formControlName="enfants" min="0" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>{{ t('noteLabel') }}</label>
+          <textarea formControlName="message" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="isSubmitting()">
+          {{ isSubmitting() ? t('submitLoading') : t('submitIdle') }}
+        </button>
+      </form>
+
+      <div *ngIf="successMessage()" class="feedback-message">
+        {{ successMessage() }}
+      </div>
+
+      <div *ngIf="errorMessage()" class="feedback-message error">
+        {{ errorMessage() }}
+      </div>
+    </div>
+  </section>
+
+  <footer style="text-align: center; padding: 40px; color: #bbb; font-size: 0.8rem">
+    {{ t('footer') }} - Build with ❤️ by
+    <a href="https://github.com/fanto237/birthdaySite" target="_blank">Papa</a>
+  </footer>
+</div>
